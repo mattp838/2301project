@@ -9,14 +9,15 @@
 */
 public class Transaction
 {
-	private double transactionID; // transactionID is set when payment is made and is the next transactionID
+	private long int transactionID; // transactionID is set when payment is made and is the next transactionID
+	// TODO: or should transactinID be set in constructor? what if a transaction is created and not paid (transaction is canceled)
 	private Date transactionDate; // date is set when payment is made
 	private ArrayList<TransactionItem> items;
 	private String paymentMethod;
 	private int subtotalInCents; // this will be modified whenever addTransaction() is called
 	private int taxInCents; // this will be set when payment method (checkOut() ) is called
 	private boolean paid; // set to true if the transaction is finished and paid for.
-	
+	private CustomerAccount account; // the customer account being worked on
 	
 	/**
 		Constructs an empty transaction for the given customer.
@@ -28,18 +29,32 @@ public class Transaction
 	*/
 	public Transaction(CustomerAccount account)
 	{
-		
+		//transactionID = getNextTransactionID(
+		this.account = account;
+		paid = false;
+		paymentMethod = "";
+		items = new ArrayList<TransactionItem>();
 	}
 	
+	/**
+	 * Get the next transactinID.
+	 * @return the next transactionID that is not used.
+	 */
+	private long int getNextTransactionID()
+	{
+	    return 100000;
+	}
+
 	/**
 		Adds a transaction line to the current transaction.
 		@param line the transaction line to add
 		<dt><b>Precondition:</b><dd>
 		Payment for the transaction has not been made.
 	*/
+	//status: done
 	public void addTransactionItem(TransactionItem line)
 	{
-	
+		items.add(line);	
 	}
 	
 	/**
@@ -47,10 +62,19 @@ public class Transaction
 		@param lineNumber the item you want to remove from the transaction.
 		@retrun returns true if the transaction item was removed.
 	*/
-	public boolean removeTransaction(int lineNumber)
+	public boolean removeTransactionItem(int lineNumber)
 	{
+
 	}
 	
+	/**
+	 * Removes the last transaction item added.
+	 * @return returns true if the last transaction was successfuly removed.
+	 */
+	public boolean removeLastTransactionItem()
+	{
+	}
+
 	/**
 		Gets the date of the transaction. The date of the transaction is set after payment is made and the transaction is finished.
 		@return the date the transaction was completed.
