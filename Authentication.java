@@ -1,7 +1,7 @@
 /**
 *	User authentication class
 *	
-*	@auther mattp
+*	@author mattp
 *	@version 1.0 March 22, 2011
 */
 public class Authentication
