@@ -1,7 +1,7 @@
 /**
 *	Proxy class
 *	
-*	@auther mattp
+*	@author mattp
 *	@version 1.0 March 22, 2011
 */
 import java.lang.reflect.Proxy;
