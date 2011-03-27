@@ -7,7 +7,7 @@
 public class Authentication
 {
 	/**
-		Constructor with one parameter
+		Default Constructor 
 	*/
 	public Authentication()
 	{
