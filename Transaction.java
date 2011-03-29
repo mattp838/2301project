@@ -14,13 +14,17 @@ todo: update class diagram for transaction to version2
 - remove printReciept() method
 - add precondition to printReciept(), where ever it goes, it can only print if the transaction has been paid
 
-- add methods methods so a printReciept method can be done in the main program
+- add methods so a printReciept method can be done in the main program
 - add method isPaid() : boolean
+- add method getCustomerFirstName()
+- add method getCustomerLastName()
+- add method getCustomerID()
+- add method 
 
 - add method markPaid(PaymentMethod payment)
 
 
-- maybe add another class PaymentMethod with attributes: ammountInCents and type and methods: getAmount() and getType()
+- maybe add another class PaymentMethod with attributes: ammountInCents and type and methods: int getAmountInCents() and String getType()
 - maybe add anouther class CreditCardMachine with methods: public boolean verify(int CCnumber, int amountInCents, int pin)
 - maybe add another class DebitMachine in similar fashion as CreditCardMachine
 - CrediCardMachine and DebitMachine could be subclass of PaymentMachine class with methods: boolean verify(int CCnumber, int amountInCents, int pin)
@@ -36,7 +40,7 @@ todo: update class diagram for transaction to version2
 	- for credit, the dummy credit card machine class should verify it.
 	- for debit, the dummy debit machine class should verify it.
 	<dt><b>Postcondition:</b><dd>
-	
+	The payment method and ammount is recorded in the transaction/invoice
 
 
 
@@ -59,23 +63,22 @@ public class Transaction
 	private int subtotalInCents; // this will be modified whenever addTransaction() is called
 	private int taxInCents; // this will be set when payment method (checkOut() ) is called
 	private boolean paid; // set to true if the transaction is finished and paid for. 
-	private CustomerAccount account; // the customer account being worked on
+	private CustomerAccount account; // the customer account being worked on 
 	
 	/**
 		Constructs an empty transaction for the given customer.
 		@param account the customer account.
 		@param transactionID the id number of the transaction (aka invoice number).
 		<dt><b>Precondition:</b><dd>
-		The customer account exists and is able to rent movies.
+		The customer account exists and is able to rent movies (account.getStatus() == true).
 		The transactionID should be a positive number and be the smallest id that does not yet exist in the database.
 		<dt><b>Postcondition:</b><dd>
-		The transaction/invoice is associa
-		
+		The transaction/invoice is associated with the customer
 	*/
 	//status: not done
 	public Transaction(CustomerAccount account, int transactionID)
 	{
-		//transactionID = getNextTransactionID(
+		this.transactionID = transactionID;
 		this.account = account;
 		paid = false;
 		paymentMethod = "";
@@ -224,6 +227,7 @@ public class Transaction
 	*/
 	public String toString()
 	{
+		return "not done, fill this in if it is needed for testing";
 	}
 	
 	
