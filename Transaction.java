@@ -5,19 +5,50 @@ or should it be set in the constructor? what if a transaction is canceled in the
 - same with transactionDate, when should it be set, after payment or in constructor?
 - when should tax amount be calculated? after item is added or after payment is made or whenever getTax() method is called?
 - Maybe the methods checkOutBy*() should be in another class and the method setPaymentMethod() should be a method in this class
-- printReciept() not done: what should be displayed?
+- printReciept() not done: what should be displayed? This sounds like a method for the main program because most of the info for a reciept can be gotten from methods in the transaction class (getDate(), getTotal(), etc).
 - should transactionID be an int?
 */
 
+/*
+todo: update class diagram for transaction to version2
+- remove printReciept() method
+- add precondition to printReciept(), where ever it goes, it can only print if the transaction has been paid
+
+- add methods methods so a printReciept method can be done in the main program
+- add method isPaid() : boolean
+
+- add method markPaid(PaymentMethod payment)
+
+
+- maybe add another class PaymentMethod with attributes: ammountInCents and type and methods: getAmount() and getType()
+- maybe add anouther class CreditCardMachine with methods: public boolean verify(int CCnumber, int amountInCents, int pin)
+- maybe add another class DebitMachine in similar fashion as CreditCardMachine
+- CrediCardMachine and DebitMachine could be subclass of PaymentMachine class with methods: boolean verify(int CCnumber, int amountInCents, int pin)
+*/
+
+/**
+	Marks the transaction as finalized/paid.
+	@param payment the payment method and ammount.
+	<dt><b>Precondition:</b><dd>
+	payment.getAmount() >= this.getSubTotal() + this.getTax()
+	payment has been verified
+	- for cash, the employee should visually inspect it.
+	- for credit, the dummy credit card machine class should verify it.
+	- for debit, the dummy debit machine class should verify it.
+	<dt><b>Postcondition:</b><dd>
+	
 
 
 
+
+*/
 import java.util.ArrayList;
 import java.util.Date;
 /**
 	A point of sales transaction.
 	@see "class diagram from SRS+SDD from teamMitch"
 */
+
 public class Transaction
 {
 	private int transactionID; // transactionID is set when payment is made and is the next transactionID
@@ -33,13 +64,16 @@ public class Transaction
 	/**
 		Constructs an empty transaction for the given customer.
 		@param account the customer account.
+		@param transactionID the id number of the transaction (aka invoice number).
 		<dt><b>Precondition:</b><dd>
 		The customer account exists and is able to rent movies.
+		The transactionID should be a positive number and be the smallest id that does not yet exist in the database.
 		<dt><b>Postcondition:</b><dd>
+		The transaction/invoice is associa
 		
 	*/
 	//status: not done
-	public Transaction(CustomerAccount account)
+	public Transaction(CustomerAccount account, int transactionID)
 	{
 		//transactionID = getNextTransactionID(
 		this.account = account;
@@ -47,6 +81,8 @@ public class Transaction
 		paymentMethod = "";
 		items = new ArrayList<TransactionItem>();
 	}
+	
+	
 
 
 
@@ -61,15 +97,15 @@ public class Transaction
 //	}
 
 	/**
-		Adds a transaction line to the current transaction.
-		@param line the transaction line to add
+		Adds a transaction item to the current transaction.
+		@param line the transaction item to add
 		<dt><b>Precondition:</b><dd>
 		Payment for the transaction has not been made.
 	*/
 	//status: done
-	public void addTransactionItem(TransactionItem line)
+	public void addTransactionItem(TransactionItem item)
 	{
-		items.add(line);	
+		items.add(item);	
 	}
 	
 	/**
